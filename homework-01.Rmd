@@ -3,6 +3,11 @@ title: "Homework 01"
 author: "JANICE IM"
 output: github_document
 ---
+```{r set up}
+# set default theme for ggplot2
+ggplot2::theme_set(ggplot2::theme_minimal(base_size = 16))
+
+```
 
 1.  **Reverse-engineering the grammar of graphics.**
 
@@ -35,25 +40,41 @@ ggplot(Weekenddata, aes(x = time, fill = severity)) +
 library(openintro)
 #install.packages("openintro")
 
-# PART A- histogram and box plot
+# PART A- A Histogram and box plot
 nyc_marathon
 
-### histogram
+### Histogram
 ggplot(nyc_marathon, aes(x = time_hrs)) +
   geom_histogram(binwidth = .05) +
   labs(title = "Marathon times of NYC runners", x = "Time (hrs)", y = "Number of NYC runners")
 
-### boxplot
+### Boxplot
 ggplot(nyc_marathon, aes(x = time_hrs)) +
   geom_boxplot() +
   coord_flip() +
   labs(title = "Marathon times of NYC runners", x = "Time (hrs)")
 
 
-# PART B- box plot for men and women
+# PART B- A Box plot for men and women
 ggplot(nyc_marathon, aes(x = time_hrs, fill = division)) + 
   geom_boxplot() +
-  scale_fill_discrete(type = c("Blue", "Red"))
+  coord_flip() +
+  scale_fill_discrete(type = c("Blue", "Red")) +
+  labs(title = "Marathon times of men and women NYC runners", x = "Time (hrs)")
+
+
+# PART C- Frequency polygon to avoid redundant information from the box plot
+ggplot(nyc_marathon, aes(x = time_hrs, color = division)) +
+  geom_freqpoly(binwidth = .1, size = 1) +
+  xlim(1,4) +
+  labs(title = "Marathon times of men and women NYC runners", x = "Time (hrs)", y= "Number of runners")
+
+
+# PART D- Visualizing the marathon times of men and women over the years
+ggplot(nyc_marathon, aes(x = year, y = time_hrs, color = division)) + 
+  geom_smooth() +
+  scale_fill_discrete(type = c("Blue", "Red")) +
+  labs(title = "Marathon times of NYC runners over the years", x = "Year", x = "Year", y = "Time (hrs)")
 
 ```
 4.  **US counties.**
