@@ -40,6 +40,7 @@ ggplot(Weekenddata, aes(x = time, fill = severity)) +
 library(openintro)
 #install.packages("openintro")
 
+
 # PART A- A Histogram and box plot
 nyc_marathon
 
@@ -71,13 +72,106 @@ ggplot(nyc_marathon, aes(x = time_hrs, color = division)) +
 
 
 # PART D- Visualizing the marathon times of men and women over the years
-ggplot(nyc_marathon, aes(x = year, y = time_hrs, color = division)) + 
-  geom_smooth() +
+ggplot(nyc_marathon, aes(x = year, y = time_hrs, color = division, shape = division)) + 
+  geom_point() +
   scale_fill_discrete(type = c("Blue", "Red")) +
   labs(title = "Marathon times of NYC runners over the years", x = "Year", x = "Year", y = "Time (hrs)")
 
 ```
 4.  **US counties.**
-`
+```{r US countries}
+county
+
+# PART A
+ggplot(county) +
+  geom_point(aes(x = median_edu, y = median_hh_income)) +
+  geom_boxplot(aes(x = smoking_ban, y = pop2017))
+
+### The variables median education and median income show up, while smoking ban and pop 2017, which seem unrelated, do not show on the graph.
+
+
+# PART B
+
+## Plot A
+ggplot(county, aes(x = homeownership, y = poverty)) +
+  geom_point() +
+  labs(title = "Plot A")
+
+## Plot B
+ggplot(county, aes(x = homeownership, y = poverty)) +
+  geom_point() +
+  geom_smooth(color = "Blue", se = FALSE) +
+  labs(title = "Plot B")
+
+
+### Plot C
+ggplot(county, aes(x = homeownership, y = poverty, group = metro)) +
+  geom_point(color = "black", show.legend = FALSE) +
+  geom_smooth(color = "green", show.legend = FALSE, se = FALSE) +
+  labs(title = "Plot C")
+
+
+### Plot D
+ggplot(county, aes(x = homeownership, y = poverty, group = metro)) +
+  geom_point(color = "black", show.legend = FALSE) +
+  geom_smooth(color = "blue", show.legend = FALSE, se = FALSE) +
+  labs(title = "Plot D")
+
+
+### Plot E
+#####This Plot E did not separate the legends for the geom_line and geom_point graphs so I made another version of Plot E.
+ggplot(county, aes(x = homeownership, y = poverty, color = metro, linetype = metro)) +
+  geom_point(show.legend = TRUE) +
+  geom_smooth(color = "blue", se = FALSE, na.rm = TRUE, show.legend = TRUE) +
+  labs(title = "Plot E")
+
+#####For this Plot E, I specified the aes mappings for each geom and I changed the show.legend argument to "NA".
+ggplot(data=county) +
+  geom_point(show.legend=NA, na.rm=FALSE,
+          mapping=aes(x=homeownership, y=poverty, color=metro, fill=metro)) +
+  geom_smooth(method = "loess", se=FALSE, show.legend=NA, na.rm=FALSE,
+          mapping=aes(x=homeownership, y=poverty, linetype=metro))
+
+
+### Plot F
+ggplot(county, aes(x = homeownership, y = poverty, color = metro)) +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  labs(title = "Plot F")
+
+
+### Plot G
+ggplot(county, aes(x = homeownership, y = poverty, color = metro)) +
+  geom_point() +
+  geom_smooth(color = "blue", se = FALSE) +
+  labs(title = "Plot G")  
+
+
+### Plot H
+ggplot(county, aes(x = homeownership, y = poverty, color = metro)) +
+  geom_point() +
+  labs(title = "Plot H")
+
+
+```
 
 5.  **Napoleon’s march.**
+
+```{r Napoleon}
+dl <- tempfile()
+download.file("https://raw.githubusercontent.com/andrewheiss/fancy-minard/master/input/minard/cities.txt", dl)
+citydata <- read_table(dl)
+
+
+dl1 <- tempfile()
+download.file("https://raw.githubusercontent.com/andrewheiss/fancy-minard/master/input/minard/temps.txt", dl1)
+tempdata <- read_table(dl1)
+
+dl2 <- tempfile()
+download.file("https://raw.githubusercontent.com/andrewheiss/fancy-minard/master/input/minard/troops.txt", dl2)
+troopdata <- read.table(dl2)
+
+
+
+
+```
